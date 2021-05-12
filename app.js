@@ -171,9 +171,14 @@ app.get('/api/getSong/:ID', (req, res) => {
 
         var url = `https://zingmp3.vn/api/song/get-song-info?id=${zingID}&ctime=${ctime}&sig=${sig}&api_key=${apiKey}`
 
-        const browser = await puppeteer.launch({
-            headless: false  //change to true in prod!
-        });
+        // const browser = await puppeteer.launch({
+        //     headless: false  //change to true in prod!
+        // });
+
+        const browser = await puppeteer.connect({  browserWSEndpoint: 'wss://chrome.browserless.io/' });
+
+
+
 
         const page = await browser.newPage();
 
