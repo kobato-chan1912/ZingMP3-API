@@ -15,7 +15,7 @@ http://localhost:3000/api/getSong/{id}
 ```
 - In Server: 
 ```bash
-https://zingapi.azurewebsites.net/api/getSong/ZWBUCUAC/{id}
+https://zingapi.azurewebsites.net/api/ZWBUCUAC/{id}
 ```
 
 ## Contributing
