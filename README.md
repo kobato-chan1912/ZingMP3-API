@@ -7,6 +7,7 @@ This is an open-source web application (built in @nodejs) for getting song infor
 - Get song in VIP. 
 
 ## Usage and deployment
+![alt text](https://github.com/kobato-chan1912/ZingMP3---API/blob/master/demo.png?raw=true)
 
 - Using /GET Moethod to interact with API.
 - In local: 
