@@ -5,33 +5,38 @@ const puppeteer = require('puppeteer');
 const superagent = require('superagent');
 // 
 
-app.get('/getStreaming/:ID', function (req, res) {
-    (async () => {
-        const browser = await puppeteer.launch({ headless: false });
-        let page = await browser.newPage();
-        let url = 'https://google.com';
-        let count_request = 0;
+// testing hello world. 
+app.get('/', function (req, res) {
+    res.send('hello world')
+})
 
-        // set time out. 
-        await page.setDefaultNavigationTimeout(0);
-
-        console.log(`Navigating to ${url}...`);
-        page.setRequestInterception(true);
-        page.on('request', (request) => {
-            request.continue();
-        });
-        await page.goto(url);
-
-        if (count_request == 0) {
-            res.json({ status: 'ID not found or Something wrong..' })
-            await browser.close();
-        }
-
-
-
-    })();
-
-});
+//   app.get('/getStreaming/:ID', function (req, res) {
+//     (async () => {
+//         const browser = await puppeteer.launch({ headless: false });
+//         let page = await browser.newPage();
+//         let url = 'https://google.com';
+//         let count_request = 0;
+// 
+//         // set time out. 
+//         await page.setDefaultNavigationTimeout(0);
+// 
+//         console.log(`Navigating to ${url}...`);
+//         page.setRequestInterception(true);
+//         page.on('request', (request) => {
+//             request.continue();
+//         });
+//         await page.goto(url);
+// 
+//         if (count_request == 0) {
+//             res.json({ status: 'ID not found or Something wrong..' })
+//             await browser.close();
+//         }
+// 
+// 
+// 
+//     })();
+// 
+// });
 // app.get('/getDetail/:ID', function (req, res) {
 //     (async () => {
 //         const browser = await puppeteer.launch({ headless: false });
@@ -226,4 +231,10 @@ app.get('/api/getSong/:ID', (req, res) => {
 
 app.listen(3000, function () {
     console.log('Example app listening on port 3000!');
+    // (async () => {
+    //     const browser = await puppeteer.launch({ headless: false });
+    //     let page = await browser.newPage();
+    //     let url = 'https://google.com';
+    //     await page.goto(url);
+    // })();
 });
