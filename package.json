@@ -4,6 +4,7 @@
   "description": "web-app",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "test": "jest"
   },
   "author": "dungmv",
