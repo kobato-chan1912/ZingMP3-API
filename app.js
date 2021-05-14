@@ -182,24 +182,24 @@ app.get('/api/getSong/:ID', (req, res) => {
         //     headless: false  //change to true in prod!
         // });
 
-        const browser = await puppeteer.connect({  browserWSEndpoint: 'wss://chrome.browserless.io/' }).catch((err) => console.log('caught it'));;
-        const page = await browser.newPage().catch((err) => console.log('caught it'));;
-        await page.goto(url).catch((err) => console.log('caught it'));;
+        const browser = await puppeteer.connect({  browserWSEndpoint: 'wss://chrome.browserless.io/' }).catch((err) => console.log('caught it 185'));;
+        const page = await browser.newPage().catch((err) => console.log('caught it 186'));;
+        await page.goto(url).catch((err) => console.log('caught it 187'));;
 
-        var content = await page.content().catch((err) => console.log('caught it'));;
+        var content = await page.content().catch((err) => console.log('caught it 189'));;
 
         innerText = await page.evaluate(() => {
             return JSON.parse(document.querySelector("body").innerText);
-        }).catch((err) => console.log('caught it'));
+        }).catch((err) => console.log('caught it 193'));
 
         console.log("Response received");
 
         if (innerText.err == -201) { // error ctime.
 
-            await page.reload().catch((err) => console.log('caught it'));;
+            await page.reload().catch((err) => console.log('caught it 199'));;
             innerText = await page.evaluate(() => {
                 return JSON.parse(document.querySelector("body").innerText);
-            }).catch((err) => console.log('caught it'));
+            }).catch((err) => console.log('caught it 202'));
             console.log(innerText);
 
             // if not found data.
@@ -224,7 +224,7 @@ app.get('/api/getSong/:ID', (req, res) => {
         //I will leave this as an excercise for you to
         //  write out to FS...
 
-        await browser.close().catch((err) => console.log('caught it'));;
+        await browser.close().catch((err) => console.log('caught it 227'));;
 
 
 
