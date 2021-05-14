@@ -6,6 +6,13 @@ const superagent = require('superagent');
 // 
 
 // testing hello world. 
+
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
 app.get('/', function (req, res) {
     res.send('hello world')
 })
@@ -175,24 +182,29 @@ app.get('/api/getSong/:ID', (req, res) => {
         //     headless: false  //change to true in prod!
         // });
 
-        const browser = await puppeteer.connect({  browserWSEndpoint: 'wss://chrome.browserless.io/' }).catch((err) => console.log('caught it 185'));;
-        const page = await browser.newPage().catch((err) => console.log('caught it 186'));;
-        await page.goto(url).catch((err) => console.log('caught it 187'));;
+        const browser = await puppeteer.connect({  browserWSEndpoint: 'wss://chrome.browserless.io/' });
 
-        var content = await page.content().catch((err) => console.log('caught it 189'));;
+
+
+
+        const page = await browser.newPage();
+
+        await page.goto(url);
+
+        var content = await page.content();
 
         innerText = await page.evaluate(() => {
             return JSON.parse(document.querySelector("body").innerText);
-        }).catch((err) => console.log('caught it 193'));
+        });
 
         console.log("Response received");
 
         if (innerText.err == -201) { // error ctime.
 
-            await page.reload().catch((err) => console.log('caught it 199'));;
+            await page.reload();
             innerText = await page.evaluate(() => {
                 return JSON.parse(document.querySelector("body").innerText);
-            }).catch((err) => console.log('caught it 202'));
+            });
             console.log(innerText);
 
             // if not found data.
@@ -217,7 +229,7 @@ app.get('/api/getSong/:ID', (req, res) => {
         //I will leave this as an excercise for you to
         //  write out to FS...
 
-        await browser.close().catch((err) => console.log('caught it 227'));;
+        await browser.close();
 
 
 
@@ -232,5 +244,10 @@ const port = process.env.PORT || 3000;
 
 app.listen(port, function () {
     console.log('Example app listening on port 3000!');
-    
+    // (async () => {
+    //     const browser = await puppeteer.launch({ headless: false });
+    //     let page = await browser.newPage();
+    //     let url = 'https://google.com';
+    //     await page.goto(url);
+    // })();
 });
