@@ -161,6 +161,9 @@ app.get('/api/getSong/:ID', (req, res) => {
 
     (async () => {
 
+
+        try {
+
         var zingID = req.params.ID;
         var ctime = 1620490720;
         var apiKey = "38e8643fb0dc04e8d65b99994d3dafff";
@@ -205,7 +208,7 @@ app.get('/api/getSong/:ID', (req, res) => {
             innerText = await page.evaluate(() => {
                 return JSON.parse(document.querySelector("body").innerText);
             });
-            console.log(innerText);
+            // console.log(innerText);
 
             // if not found data.
             if (innerText.err == -105) { // data not found. 
@@ -232,7 +235,9 @@ app.get('/api/getSong/:ID', (req, res) => {
         await browser.close();
 
 
-
+    } catch (err){
+        console.log(err);
+    }
     })
         ();
 
@@ -244,5 +249,4 @@ const port = process.env.PORT || 3000;
 
 app.listen(port, function () {
     console.log('Example app listening on port 3000!');
-    
 });
