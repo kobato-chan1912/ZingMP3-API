@@ -244,10 +244,5 @@ const port = process.env.PORT || 3000;
 
 app.listen(port, function () {
     console.log('Example app listening on port 3000!');
-    (async () => {
-        const browser = await puppeteer.connect({  browserWSEndpoint: 'wss://chrome.browserless.io/' });
-        let page = await browser.newPage();
-        let url = 'https://nice-desert-01843fb00.azurestaticapps.net/dist';
-        await page.goto(url);
-    })();
+    
 });
