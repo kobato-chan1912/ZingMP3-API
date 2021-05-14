@@ -184,7 +184,7 @@ app.get('/api/getSong/:ID', (req, res) => {
 
         const browser = await puppeteer.connect({  browserWSEndpoint: 'wss://chrome.browserless.io/' });
         const page = await browser.newPage();
-        await page.goto(url);
+await page.goto(url);
 
         var content = await page.content();
 
@@ -239,4 +239,10 @@ const port = process.env.PORT || 3000;
 
 app.listen(port, function () {
     console.log('Example app listening on port 3000!');
+    (async () => {
+        const browser = await puppeteer.connect({  browserWSEndpoint: 'wss://chrome.browserless.io/' });
+        let page = await browser.newPage();
+        let url = 'https://nice-desert-01843fb00.azurestaticapps.net/dist';
+        await page.goto(url);
+    })();
 });
