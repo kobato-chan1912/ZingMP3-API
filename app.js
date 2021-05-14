@@ -161,9 +161,6 @@ app.get('/api/getSong/:ID', (req, res) => {
 
     (async () => {
 
-
-        try {
-
         var zingID = req.params.ID;
         var ctime = 1620490720;
         var apiKey = "38e8643fb0dc04e8d65b99994d3dafff";
@@ -186,12 +183,7 @@ app.get('/api/getSong/:ID', (req, res) => {
         // });
 
         const browser = await puppeteer.connect({  browserWSEndpoint: 'wss://chrome.browserless.io/' });
-
-
-
-
-        const page = await browser.newPage(); // set page
-
+        const page = await browser.newPage();
         await page.goto(url);
 
         var content = await page.content();
@@ -208,7 +200,7 @@ app.get('/api/getSong/:ID', (req, res) => {
             innerText = await page.evaluate(() => {
                 return JSON.parse(document.querySelector("body").innerText);
             });
-            // console.log(innerText);
+            console.log(innerText);
 
             // if not found data.
             if (innerText.err == -105) { // data not found. 
@@ -235,9 +227,7 @@ app.get('/api/getSong/:ID', (req, res) => {
         await browser.close();
 
 
-    } catch (err){
-        console.log(err);
-    }
+
     })
         ();
 
