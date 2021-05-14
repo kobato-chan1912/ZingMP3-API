@@ -161,8 +161,6 @@ app.get('/api/getSong/:ID', (req, res) => {
 
     (async () => {
 
-        try {
-
         var zingID = req.params.ID;
         var ctime = 1620490720;
         var apiKey = "38e8643fb0dc04e8d65b99994d3dafff";
@@ -184,24 +182,24 @@ app.get('/api/getSong/:ID', (req, res) => {
         //     headless: false  //change to true in prod!
         // });
 
-        const browser = await puppeteer.connect({  browserWSEndpoint: 'wss://chrome.browserless.io/' });
-        const page = await browser.newPage();
-        await page.goto(url);
+        const browser = await puppeteer.connect({  browserWSEndpoint: 'wss://chrome.browserless.io/' }).catch((err) => console.log('caught it'));;
+        const page = await browser.newPage().catch((err) => console.log('caught it'));;
+        await page.goto(url).catch((err) => console.log('caught it'));;
 
-        var content = await page.content();
+        var content = await page.content().catch((err) => console.log('caught it'));;
 
         innerText = await page.evaluate(() => {
             return JSON.parse(document.querySelector("body").innerText);
-        });
+        }).catch((err) => console.log('caught it'));
 
         console.log("Response received");
 
         if (innerText.err == -201) { // error ctime.
 
-            await page.reload();
+            await page.reload().catch((err) => console.log('caught it'));;
             innerText = await page.evaluate(() => {
                 return JSON.parse(document.querySelector("body").innerText);
-            });
+            }).catch((err) => console.log('caught it'));
             console.log(innerText);
 
             // if not found data.
@@ -226,10 +224,7 @@ app.get('/api/getSong/:ID', (req, res) => {
         //I will leave this as an excercise for you to
         //  write out to FS...
 
-        await browser.close();
-    } catch(e) {
-        console.log('Error caught');
-      }
+        await browser.close().catch((err) => console.log('caught it'));;
 
 
 
