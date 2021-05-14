@@ -7,7 +7,7 @@ const superagent = require('superagent');
 
 // testing hello world. 
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
@@ -178,15 +178,19 @@ app.get('/api/getSong/:ID', (req, res) => {
 
         var url = `https://zingmp3.vn/api/song/get-song-info?id=${zingID}&ctime=${ctime}&sig=${sig}&api_key=${apiKey}`
 
-        var browser = await puppeteer.launch({
-            headless: false,
-            args: ['--no-sandbox']
+        // var browser = await puppeteer.launch({
+        //     headless: false,
+        //     args: ['--no-sandbox']
+        // });
+        const browser = await puppeteer.connect({
+            browserWSEndpoint:
+                'wss://proxy.0browser.com?token=5e2f1670-0146-4e11-8d53-e5c9315d5aca&timeout=60000',
         });
 
         // const browser = await puppeteer.connect({
         //     browserWSEndpoint: 'wss://chrome.browserless.io/'
         //   });
-          
+
 
 
 
@@ -218,10 +222,11 @@ app.get('/api/getSong/:ID', (req, res) => {
             }
             else { // data found                  
                 let streaming = `http://api.mp3.zing.vn/api/streaming/audio/${req.params.ID}/320`;
-                res.json({ status: 200,
+                res.json({
+                    status: 200,
                     title: innerText.data.title, artist: innerText.data.artists_names, lyrics:
-                        innerText.data.lyric, cover: innerText.data.thumbnail_medium, 
-                        streaming: streaming
+                        innerText.data.lyric, cover: innerText.data.thumbnail_medium,
+                    streaming: streaming
                 });
             }
         }
