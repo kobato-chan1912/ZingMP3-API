@@ -161,6 +161,8 @@ app.get('/api/getSong/:ID', (req, res) => {
 
     (async () => {
 
+        try {
+
         var zingID = req.params.ID;
         var ctime = 1620490720;
         var apiKey = "38e8643fb0dc04e8d65b99994d3dafff";
@@ -184,7 +186,7 @@ app.get('/api/getSong/:ID', (req, res) => {
 
         const browser = await puppeteer.connect({  browserWSEndpoint: 'wss://chrome.browserless.io/' });
         const page = await browser.newPage();
-await page.goto(url);
+        await page.goto(url);
 
         var content = await page.content();
 
@@ -225,6 +227,9 @@ await page.goto(url);
         //  write out to FS...
 
         await browser.close();
+    } catch(e) {
+        console.log('Error caught');
+      }
 
 
 
@@ -239,10 +244,5 @@ const port = process.env.PORT || 3000;
 
 app.listen(port, function () {
     console.log('Example app listening on port 3000!');
-    (async () => {
-        const browser = await puppeteer.connect({  browserWSEndpoint: 'wss://chrome.browserless.io/' });
-        let page = await browser.newPage();
-        let url = 'https://nice-desert-01843fb00.azurestaticapps.net/dist';
-        await page.goto(url);
-    })();
+    
 });
