@@ -5,7 +5,7 @@ const puppeteer = require('puppeteer');
 const superagent = require('superagent');
 // 
 
-// testing hello world. 
+// Hello World Testing //  
 
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -17,145 +17,19 @@ app.get('/', function (req, res) {
     res.send('hello world')
 })
 
-//   app.get('/getStreaming/:ID', function (req, res) {
-//     (async () => {
-//         const browser = await puppeteer.launch({ headless: false });
-//         let page = await browser.newPage();
-//         let url = 'https://google.com';
-//         let count_request = 0;
-// 
-//         // set time out. 
-//         await page.setDefaultNavigationTimeout(0);
-// 
-//         console.log(`Navigating to ${url}...`);
-//         page.setRequestInterception(true);
-//         page.on('request', (request) => {
-//             request.continue();
-//         });
-//         await page.goto(url);
-// 
-//         if (count_request == 0) {
-//             res.json({ status: 'ID not found or Something wrong..' })
-//             await browser.close();
-//         }
-// 
-// 
-// 
-//     })();
-// 
-// });
-// app.get('/getDetail/:ID', function (req, res) {
-//     (async () => {
-//         const browser = await puppeteer.launch({ headless: false });
-//         let page = await browser.newPage();
-//         let url = 'https://zingmp3.vn/bai-hat/' + req.params.ID + '.html';
-//         let count_request = 0;
-// 
-//         // set time out. 
-//         await page.setDefaultNavigationTimeout(0);
-// 
-//         console.log(`Navigating to ${url}...`);
-//         page.setRequestInterception(true);
-//         page.on('request', (request) => {
-// 
-// 
-//         //   if (request.resourceType() === 'xhr') {
-//         
-//             if (request.url().includes("song/getDetail")){
-//                 count_request++;
-//                 // read request 
-//                 page.on('response', async (response) => {    
-//                     if (response.url() == request.url()){
-//                         console.log('Streaming response received'); 
-//                         res.send(await response.json()); 
-//                     } 
-//                 }); 
-//                 
-//             }
-//         //   }
-//           request.continue();
-//         });
-//         await page.goto(url);
-// 
-//         if (count_request == 0){
-//             res.json({status: 'ID not found or Something wrong.'})
-//             await browser.close();
-//         }
-//         
-// 
-// 
-//       })();
-//       
-// });
-// 
-// app.get('/getLyric/:ID', function (req, res) {
-//     (async () => {
-//         const browser = await puppeteer.launch({ headless: false });
-//         let page = await browser.newPage();
-//         let url = 'https://zingmp3.vn/bai-hat/' + req.params.ID + '.html';
-//         let count_request = 0;
-// 
-// 
-//         // set time out. 
-//         await page.setDefaultNavigationTimeout(0);
-// 
-//         console.log(`Navigating to ${url}...`);
-//         
-// 
-//         page.setRequestInterception(true);
-// 
-//         page.on('request', (request) => {
-// 
-// 
-//         //   if (request.resourceType() === 'xhr') {
-//         
-//             if (request.url().includes("v2/lyric")){
-//                 count_request++;
-//                 // read request 
-//                 page.on('response', async (response) => {   
-// 
-//                     
-// 
-//                     if (response.url() == request.url()){
-//                         console.log('Streaming response received'); 
-//                         res.send(await response.json()); 
-//                         await browser.close()
-//                 }
-//                 }); 
-//                 
-//             }
-//         //   }
-//           request.continue();
-//         });
-//         await page.goto(url, { waitUntil: 'networkidle2' });
-//         // let selector = 'i[class="icon ic-karaoke"]';
-//         // if (selector){
-//         // await page.evaluate((selector) => document.querySelector(selector).click(), selector); 
-//         // }
-//         // else{
-//         //     res.json({status: 'ID not found.'})
-//         //     await browser.close();
-//         // }
-// 
-//         const selector = 'i[class="icon ic-karaoke"]';
-//         try {
-//             if (selector)
-//                 await page.evaluate((selector) => document.querySelector(selector).click(), selector); 
-//         } catch {
-//             res.json({status: 'ID not found or Something wrong.'});
-//             await browser.close();
-//         }
-//     
-//         
-// 
-// 
-//       })();
-//       
-// });
 
-
-//  crypto zing mp3 lyrics.
-
+//  Route for Getting Song Detail // 
+//  Method: Get
+//  Endpoint: api/getSong/:ID
+//  {
+//     Response: 
+//     status: 200,
+//     title:,
+//     artist:, 
+//     lyrics:, 
+//     cover:,
+//     streaming: 
+//  }
 
 app.get('/api/getSong/:ID', (req, res) => {
 
@@ -163,7 +37,7 @@ app.get('/api/getSong/:ID', (req, res) => {
 
         var zingID = req.params.ID;
         var ctime = 1620490720;
-        var apiKey = "38e8643fb0dc04e8d65b99994d3dafff";
+        var apiKey = "38e8643fb0dc04e8d65b99994d3dafff"; // You can use your Api Key. 
 
 
         const getHash256 = (a) => {
@@ -206,7 +80,7 @@ app.get('/api/getSong/:ID', (req, res) => {
 
         console.log("Response received");
 
-        if (innerText.err == -201) { // error ctime.
+        if (innerText.err == -201) { // Error Ctime.
 
             await page.reload();
             innerText = await page.evaluate(() => {
@@ -231,11 +105,7 @@ app.get('/api/getSong/:ID', (req, res) => {
             }
         }
 
-
-
-
-        //I will leave this as an excercise for you to
-        //  write out to FS...
+        //  Close headless browser...
 
         await browser.close();
 
@@ -248,14 +118,8 @@ app.get('/api/getSong/:ID', (req, res) => {
 
 });
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3000; // You can change your port
 
 app.listen(port, function () {
-    console.log('Example app listening on port 3000!');
-    // (async () => {
-    //     const browser = await puppeteer.launch({ headless: false });
-    //     let page = await browser.newPage();
-    //     let url = 'https://google.com';
-    //     await page.goto(url);
-    // })();
+    console.log('API Available on Port 3000!');
 });
